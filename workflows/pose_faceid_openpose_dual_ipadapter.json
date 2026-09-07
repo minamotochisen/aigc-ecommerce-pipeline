@@ -1,0 +1,186 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "realisticVisionV60B1_v51HyperVAE.safetensors"
+    }
+  },
+  "2": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "face_ref.png"
+    }
+  },
+  "3": {
+    "class_type": "IPAdapterUnifiedLoaderFaceID",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "preset": "FACEID PLUS V2",
+      "lora_strength": 0.7,
+      "provider": "CUDA"
+    }
+  },
+  "4": {
+    "class_type": "IPAdapter",
+    "inputs": {
+      "model": [
+        "3",
+        0
+      ],
+      "ipadapter": [
+        "3",
+        1
+      ],
+      "image": [
+        "2",
+        0
+      ],
+      "weight": 0.9,
+      "weight_type": "standard",
+      "start_at": 0.0,
+      "end_at": 1.0
+    }
+  },
+  "5": {
+    "class_type": "ControlNetLoader",
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_openpose_fp16.safetensors"
+    }
+  },
+  "6": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "skeleton.png"
+    }
+  },
+  "7": {
+    "class_type": "ControlNetApply",
+    "inputs": {
+      "conditioning": [
+        "8",
+        0
+      ],
+      "control_net": [
+        "5",
+        0
+      ],
+      "image": [
+        "6",
+        0
+      ],
+      "strength": 0.95
+    }
+  },
+  "8": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "a beautiful young asian woman, long straight black hair, (sitting on a white stool:1.5), legs crossed, (wearing a dark navy blue mini dress:1.3) covered in (pink rose floral print:1.3), colorful floral pattern all over the dress fabric, thin black ribbon straps, sweetheart neckline, bare legs, white sneakers, (full body in frame:1.2), (plain light grey seamless studio backdrop:1.4), empty studio, no props, (bright even studio lighting:1.2), e-commerce fashion photography, highly detailed fabric texture, photorealistic, masterpiece, best quality",
+      "clip": [
+        "1",
+        1
+      ]
+    }
+  },
+  "9": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "lingerie, underwear, bikini, corset, swimwear, bra, panties, nude, nsfw, wall decorations, wall art, props, plants, furniture, clutter, dark background, moody lighting, shadows, cgi, cartoon, anime, 3d, render, worst quality, low quality, blurry, deformed, bad anatomy, bad hands, extra fingers, watermark, text, logo",
+      "clip": [
+        "1",
+        1
+      ]
+    }
+  },
+  "10": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 512,
+      "height": 768,
+      "batch_size": 1
+    }
+  },
+  "11": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 99302,
+      "steps": 30,
+      "cfg": 6.5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1.0,
+      "model": [
+        "5c",
+        0
+      ],
+      "positive": [
+        "7",
+        0
+      ],
+      "negative": [
+        "9",
+        0
+      ],
+      "latent_image": [
+        "10",
+        0
+      ]
+    }
+  },
+  "12": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    }
+  },
+  "13": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "pose_v5",
+      "images": [
+        "12",
+        0
+      ]
+    }
+  },
+  "5b": {
+    "class_type": "IPAdapterUnifiedLoader",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "preset": "PLUS (high strength)"
+    }
+  },
+  "5c": {
+    "class_type": "IPAdapter",
+    "inputs": {
+      "model": [
+        "4",
+        0
+      ],
+      "ipadapter": [
+        "5b",
+        1
+      ],
+      "image": [
+        "2",
+        0
+      ],
+      "weight": 0.4,
+      "weight_type": "standard",
+      "start_at": 0.0,
+      "end_at": 1.0
+    }
+  }
+}
