@@ -3,6 +3,13 @@
 > 从一个模糊想法,到一条能稳定批产、能用数据裁决技术路线、敢把失败实验如实归档的完整管线。
 > 全部在单张消费级显卡(RTX 4070 Ti SUPER 16GB)上完成。
 
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![ComfyUI](https://img.shields.io/badge/ComfyUI-API调度-7C3AED)
+![Qwen-Image-Edit](https://img.shields.io/badge/Qwen--Image--Edit-2511-6366F2)
+![SDXL](https://img.shields.io/badge/SDXL-Inpaint_IPAdapter-EE4C2C?logo=stableconversion&logoColor=white)
+![Wan2.2](https://img.shields.io/badge/Wan2.1%2F2.2-图生视频-EC4899)
+![Eval](https://img.shields.io/badge/评测-CLIP--T%2FCLIP--I%20量化选型-10B981)
+
 ## 这个项目解决什么问题
 
 女装电商的模特实拍:一款服装几百到上千元、周期好几天、改一处重拍一次。这个项目验证并跑通了一件事——**用开源模型在端侧把商拍做到"可交付"质量**:
